@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper" ref="aaa">
     <ul class="content">
+      <button @click="btnClick">按钮</button>
       <li>分类列表1</li>
       <li>分类列表2</li>
       <li>分类列表3</li>
@@ -115,13 +116,29 @@ export default {
       scroll: null
     };
   },
-  created() {
-    // this.scroll = new BScroll(".wrapper", {});
-  },
+
   mounted() {
     // console.log(this.$refs.aaa);
-    // console.log(document.querySelector(".wrapper"));
-    this.scroll = new BScroll(this.$refs.aaa, {});
+    // this.scroll = new BScroll(this.$refs.aaa, {});
+    this.scroll = new BScroll(document.querySelector(".wrapper"), {
+      probeType: 3, //侦查滚动
+      pullUpLoad: true //上拉加载更多
+    });
+
+    // 监听scroll位置
+    this.scroll.on("scroll", position => {
+      console.log(position);
+    });
+
+    // 上拉加载更多
+    this.scroll.on("pullUpLoad", () => {
+      console.log("上拉加载更多");
+    });
+  },
+  methods: {
+    btnClick() {
+      console.log("btnClick");
+    }
   }
 };
 </script>
